@@ -13,7 +13,7 @@ export function CheckInButton({
   disabled = false,
   checkedIn = false,
 }: CheckInButtonProps) {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current!;
 
   useEffect(() => {
     if (!checkedIn) {

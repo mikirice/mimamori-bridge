@@ -1,56 +1,29 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useRouter } from "expo-router";
-import { supabase } from "../../lib/supabase";
 import { useStore } from "../../store/useStore";
+import { useCheckins } from "../../hooks/useCheckins";
+import { useNotifications } from "../../hooks/useNotifications";
 import { CheckInButton } from "../../components/senior/CheckInButton";
 import { Colors } from "../../constants/colors";
 
 export default function SeniorHome() {
   const router = useRouter();
-  const { profile, familyId } = useStore();
-  const [checkedIn, setCheckedIn] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { profile } = useStore();
+  const { todayCheckedIn, loading, doCheckin } = useCheckins();
+  const { scheduleDailyCheckin } = useNotifications();
 
   useEffect(() => {
-    checkTodayCheckin();
+    // Schedule daily check-in notification at 7:00 AM
+    scheduleDailyCheckin(7, 0);
   }, []);
 
-  async function checkTodayCheckin() {
-    if (!profile) return;
-    const today = new Date().toISOString().split("T")[0];
-    const { data } = await supabase
-      .from("check_ins")
-      .select("id")
-      .eq("senior_id", profile.id)
-      .gte("created_at", `${today}T00:00:00`)
-      .not("responded_at", "is", null)
-      .limit(1);
-
-    if (data && data.length > 0) {
-      setCheckedIn(true);
-    }
-  }
-
   async function handleCheckIn() {
-    if (!profile || !familyId) return;
-    setLoading(true);
-
-    try {
-      const now = new Date().toISOString();
-      await supabase.from("check_ins").insert({
-        senior_id: profile.id,
-        family_id: familyId,
-        type: "morning",
-        responded_at: now,
-      });
-
-      setCheckedIn(true);
+    const success = await doCheckin("morning");
+    if (success) {
       Alert.alert("送信しました", "ご家族に「元気です」を伝えました");
-    } catch (e: any) {
+    } else {
       Alert.alert("エラー", "送信に失敗しました。もう一度お試しください。");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -90,7 +63,7 @@ export default function SeniorHome() {
       <CheckInButton
         onPress={handleCheckIn}
         disabled={loading}
-        checkedIn={checkedIn}
+        checkedIn={todayCheckedIn}
       />
 
       <Text
@@ -102,7 +75,7 @@ export default function SeniorHome() {
           lineHeight: 26,
         }}
       >
-        {checkedIn
+        {todayCheckedIn
           ? "今日の安否確認は完了しています"
           : "ボタンをタップして\n家族に元気を伝えましょう"}
       </Text>
