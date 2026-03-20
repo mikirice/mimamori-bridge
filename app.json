@@ -15,17 +15,24 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "net.miki-studio.mimamori-bridge",
-      "buildNumber": "1",
-      "infoPlist": {
+            "infoPlist": {
         "NSHealthShareUsageDescription": "家族の安否確認のために歩数データを共有します",
         "NSHealthUpdateUsageDescription": "ヘルスデータの更新権限は使用しません",
-        "UIBackgroundModes": ["fetch", "remote-notification"],
-        "CFBundleLocalizations": ["ja", "en"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification"
+        ],
+        "CFBundleLocalizations": [
+          "ja",
+          "en"
+        ],
         "CFBundleDevelopmentRegion": "ja"
       },
       "entitlements": {
         "com.apple.developer.healthkit": true,
-        "com.apple.developer.healthkit.access": ["health-records"]
+        "com.apple.developer.healthkit.access": [
+          "health-records"
+        ]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -51,9 +58,10 @@
     ],
     "extra": {
       "eas": {
-        "projectId": ""
-      }
+        "projectId": "2aac1616-bfd1-48ee-976b-84f50961534c"
+      },
+      "router": {}
     },
-    "owner": "mikirice"
+    "owner": "mikiriceshop"
   }
 }
