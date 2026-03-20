@@ -15,6 +15,7 @@ import { SeniorCard } from "../../components/watcher/SeniorCard";
 import { AlertBanner } from "../../components/watcher/AlertBanner";
 import { ActivityTimeline } from "../../components/watcher/ActivityTimeline";
 import { CheckinHistory } from "../../components/watcher/CheckinHistory";
+import { StepsChart } from "../../components/watcher/StepsChart";
 import { Card } from "../../components/ui/Card";
 import { Colors } from "../../constants/colors";
 
@@ -25,6 +26,7 @@ interface SeniorStatus {
   displayName: string;
   lastCheckin: string | null;
   todaySteps: number | null;
+  yesterdaySteps: number | null;
   status: Status;
 }
 
@@ -96,7 +98,22 @@ export default function WatcherHome() {
         .limit(1)
         .single();
 
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split("T")[0];
+      const { data: yesterdayData } = await supabase
+        .from("health_signals")
+        .select("value")
+        .eq("senior_id", member.user_id)
+        .eq("signal_type", "steps")
+        .gte("recorded_at", `${yesterdayStr}T00:00:00`)
+        .lt("recorded_at", `${today}T00:00:00`)
+        .order("recorded_at", { ascending: false })
+        .limit(1)
+        .single();
+
       const steps = stepsData?.value?.steps ?? null;
+      const ySteps = yesterdayData?.value?.steps ?? null;
       const lastTime = lastCheckin?.responded_at ?? null;
 
       let status: Status = "unknown";
@@ -113,6 +130,7 @@ export default function WatcherHome() {
         displayName: member.display_name,
         lastCheckin: lastTime,
         todaySteps: steps,
+        yesterdaySteps: ySteps,
         status,
       });
     }
@@ -358,6 +376,18 @@ export default function WatcherHome() {
           />
         ))
       )}
+
+      {/* Steps Chart */}
+      {selectedSenior && (() => {
+        const s = seniors.find((s) => s.userId === selectedSenior);
+        return s ? (
+          <StepsChart
+            todaySteps={s.todaySteps}
+            yesterdaySteps={s.yesterdaySteps}
+            seniorName={s.displayName}
+          />
+        ) : null;
+      })()}
 
       {/* Activity Timeline */}
       {selectedSenior && <ActivityTimeline events={timeline} />}

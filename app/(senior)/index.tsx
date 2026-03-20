@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { useStore } from "../../store/useStore";
 import { useCheckins } from "../../hooks/useCheckins";
 import { useNotifications } from "../../hooks/useNotifications";
+import { useHealthKit } from "../../hooks/useHealthKit";
 import { CheckInButton } from "../../components/senior/CheckInButton";
 import { Colors } from "../../constants/colors";
 
@@ -12,11 +13,14 @@ export default function SeniorHome() {
   const { profile } = useStore();
   const { todayCheckedIn, loading, doCheckin } = useCheckins();
   const { scheduleDailyCheckin } = useNotifications();
+  const { isAvailable, startBackgroundSync } = useHealthKit();
 
   useEffect(() => {
-    // Schedule daily check-in notification at 7:00 AM
     scheduleDailyCheckin(7, 0);
-  }, []);
+    if (isAvailable) {
+      startBackgroundSync();
+    }
+  }, [isAvailable]);
 
   async function handleCheckIn() {
     const success = await doCheckin("morning");
