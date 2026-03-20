@@ -30,6 +30,9 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       await signIn(email, password);
+      // Auth state change will trigger profile fetch in useAuth
+      // Navigate to index which handles routing based on profile/role
+      router.replace("/");
     } catch (e: any) {
       Alert.alert("ログインエラー", e.message);
     } finally {

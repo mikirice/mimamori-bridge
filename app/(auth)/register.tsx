@@ -37,7 +37,7 @@ export default function RegisterScreen() {
     setLoading(true);
     try {
       await signUp(email, password, displayName, role);
-      Alert.alert("登録完了", "アカウントが作成されました");
+      router.replace("/");
     } catch (e: any) {
       Alert.alert("登録エラー", e.message);
     } finally {

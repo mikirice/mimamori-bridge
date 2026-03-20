@@ -84,29 +84,38 @@ export function useFamily() {
   );
 
   const fetchMembers = useCallback(async () => {
-    if (!familyId) return;
+    if (!familyId) return [];
 
-    const { data, error } = await supabase
+    // Fetch members and their display names separately to avoid RLS join issues
+    const { data: memberData, error: memberError } = await supabase
       .from("family_members")
-      .select(
-        `
-        id,
-        user_id,
-        role,
-        users (display_name)
-      `
-      )
+      .select("id, user_id, role")
       .eq("family_id", familyId);
 
-    if (data && !error) {
-      const members = data.map((m: any) => ({
-        id: m.id,
-        user_id: m.user_id,
-        display_name: m.users?.display_name || "Unknown",
-        role: m.role,
-      }));
-      setFamilyMembers(members);
+    if (!memberData || memberError) return [];
+
+    // Fetch display names for all member user_ids
+    const userIds = memberData.map((m: any) => m.user_id);
+    const { data: userData } = await supabase
+      .from("users")
+      .select("id, display_name")
+      .in("id", userIds);
+
+    const nameMap = new Map<string, string>();
+    if (userData) {
+      for (const u of userData) {
+        nameMap.set(u.id, u.display_name);
+      }
     }
+
+    const members = memberData.map((m: any) => ({
+      id: m.id,
+      user_id: m.user_id,
+      display_name: nameMap.get(m.user_id) || "Unknown",
+      role: m.role,
+    }));
+    setFamilyMembers(members);
+    return members;
   }, [familyId]);
 
   const getInviteCode = useCallback(async () => {
