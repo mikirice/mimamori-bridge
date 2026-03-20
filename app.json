@@ -15,20 +15,29 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "net.miki-studio.mimamori-bridge",
+      "buildNumber": "1",
       "infoPlist": {
         "NSHealthShareUsageDescription": "家族の安否確認のために歩数データを共有します",
         "NSHealthUpdateUsageDescription": "ヘルスデータの更新権限は使用しません",
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "CFBundleLocalizations": ["ja", "en"],
+        "CFBundleDevelopmentRegion": "ja"
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": ["health-records"]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#4CAF50",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "foregroundImage": "./assets/android-icon-foreground.png"
       },
-      "package": "net.mikistudio.mimamoribrige"
+      "package": "net.mikistudio.mimamoribrige",
+      "versionCode": 1
     },
     "plugins": [
       "expo-router",
@@ -39,6 +48,12 @@
           "color": "#4CAF50"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    },
+    "owner": "mikirice"
   }
 }

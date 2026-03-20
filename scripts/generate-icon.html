@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>body{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#eee}</style>
+</head>
+<body>
+<canvas id="c" width="1024" height="1024"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = 1024;
+
+// Background - rounded rect with gradient
+const grad = ctx.createLinearGradient(0, 0, W, W);
+grad.addColorStop(0, '#4CAF50');
+grad.addColorStop(1, '#2E7D32');
+
+// Draw rounded rect background
+const r = 180;
+ctx.beginPath();
+ctx.moveTo(r, 0);
+ctx.lineTo(W - r, 0);
+ctx.quadraticCurveTo(W, 0, W, r);
+ctx.lineTo(W, W - r);
+ctx.quadraticCurveTo(W, W, W - r, W);
+ctx.lineTo(r, W);
+ctx.quadraticCurveTo(0, W, 0, W - r);
+ctx.lineTo(0, r);
+ctx.quadraticCurveTo(0, 0, r, 0);
+ctx.fillStyle = grad;
+ctx.fill();
+
+// Draw bridge arch (symbolizing connection)
+ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+ctx.lineWidth = 40;
+ctx.beginPath();
+ctx.arc(W/2, W + 100, 500, Math.PI * 1.15, Math.PI * 1.85);
+ctx.stroke();
+
+// Draw two figures connected
+// Left figure (watcher - smaller)
+ctx.fillStyle = '#FFFFFF';
+
+// Left person - head
+ctx.beginPath();
+ctx.arc(340, 340, 60, 0, Math.PI * 2);
+ctx.fill();
+// Left person - body
+ctx.beginPath();
+ctx.arc(340, 520, 80, 0, Math.PI * 2);
+ctx.fill();
+ctx.fillRect(260, 440, 160, 80);
+
+// Right person - head (senior - slightly larger)
+ctx.beginPath();
+ctx.arc(684, 340, 65, 0, Math.PI * 2);
+ctx.fill();
+// Right person - body
+ctx.beginPath();
+ctx.arc(684, 520, 85, 0, Math.PI * 2);
+ctx.fill();
+ctx.fillRect(599, 440, 170, 80);
+
+// Connection line - heartbeat style between them
+ctx.strokeStyle = '#FFFFFF';
+ctx.lineWidth = 8;
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+ctx.beginPath();
+ctx.moveTo(420, 430);
+ctx.lineTo(460, 430);
+ctx.lineTo(480, 390);
+ctx.lineTo(512, 470);
+ctx.lineTo(540, 390);
+ctx.lineTo(560, 430);
+ctx.lineTo(604, 430);
+ctx.stroke();
+
+// Heart above
+ctx.fillStyle = '#FFCDD2';
+const hx = 512, hy = 240, hs = 40;
+ctx.beginPath();
+ctx.moveTo(hx, hy + hs * 0.4);
+ctx.bezierCurveTo(hx, hy, hx - hs, hy - hs * 0.5, hx - hs, hy + hs * 0.1);
+ctx.bezierCurveTo(hx - hs, hy + hs * 0.6, hx, hy + hs, hx, hy + hs * 1.2);
+ctx.bezierCurveTo(hx, hy + hs, hx + hs, hy + hs * 0.6, hx + hs, hy + hs * 0.1);
+ctx.bezierCurveTo(hx + hs, hy - hs * 0.5, hx, hy, hx, hy + hs * 0.4);
+ctx.fill();
+
+// App name at bottom
+ctx.fillStyle = 'rgba(255,255,255,0.95)';
+ctx.font = 'bold 80px -apple-system, sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('mimamori', W/2, W - 180);
+ctx.font = '60px -apple-system, sans-serif';
+ctx.fillStyle = 'rgba(255,255,255,0.7)';
+ctx.fillText('bridge', W/2, W - 110);
+
+// Download as PNG
+const link = document.createElement('a');
+link.download = 'icon-1024.png';
+link.href = c.toDataURL('image/png');
+link.click();
+</script>
+</body>
+</html>
