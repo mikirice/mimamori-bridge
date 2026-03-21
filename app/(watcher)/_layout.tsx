@@ -1,10 +1,10 @@
 import { Tabs } from "expo-router";
-import { Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/colors";
 
-function TabIcon({ icon, focused }: { icon: string; focused: boolean }) {
+function TabIcon({ name, focused }: { name: React.ComponentProps<typeof Ionicons>["name"]; focused: boolean }) {
   return (
-    <Text style={{ fontSize: 24, opacity: focused ? 1 : 0.5 }}>{icon}</Text>
+    <Ionicons name={name} size={24} color={focused ? Colors.primary : Colors.textSecondary} />
   );
 }
 
@@ -35,7 +35,7 @@ export default function WatcherLayout() {
         options={{
           title: "ホーム",
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="🏠" focused={focused} />
+            <TabIcon name={focused ? "home" : "home-outline"} focused={focused} />
           ),
           headerTitle: "MimamoriBridge",
         }}
@@ -45,7 +45,7 @@ export default function WatcherLayout() {
         options={{
           title: "家族",
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="👨‍👩‍👧" focused={focused} />
+            <TabIcon name={focused ? "people" : "people-outline"} focused={focused} />
           ),
         }}
       />
@@ -54,7 +54,7 @@ export default function WatcherLayout() {
         options={{
           title: "設定",
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="⚙️" focused={focused} />
+            <TabIcon name={focused ? "settings" : "settings-outline"} focused={focused} />
           ),
         }}
       />

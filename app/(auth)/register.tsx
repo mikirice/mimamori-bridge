@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
@@ -93,7 +94,7 @@ export default function RegisterScreen() {
               gap: 8,
             }}
           >
-            <Text style={{ fontSize: 32 }}>👀</Text>
+            <Ionicons name="eye-outline" size={32} color={role === "watcher" ? Colors.primaryDark : Colors.primary} />
             <Text
               style={{
                 fontSize: 16,
@@ -130,7 +131,7 @@ export default function RegisterScreen() {
               gap: 8,
             }}
           >
-            <Text style={{ fontSize: 32 }}>🏠</Text>
+            <Ionicons name="home-outline" size={32} color={role === "senior" ? Colors.primaryDark : Colors.primary} />
             <Text
               style={{
                 fontSize: 16,

@@ -15,12 +15,19 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "net.miki-studio.mimamori-bridge",
-            "infoPlist": {
+      "infoPlist": {
         "CFBundleLocalizations": [
           "ja",
           "en"
         ],
-        "CFBundleDevelopmentRegion": "ja"
+        "CFBundleDevelopmentRegion": "ja",
+        "NSHealthShareUsageDescription": "MimamoriBridgeは毎日の歩数を読み取り、ご家族に生活リズムを共有します。歩数データは家族グループ内でのみ使用されます。",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.healthkit.access": ["health-records"],
+        "aps-environment": "production"
       },
       "config": {
         "usesNonExemptEncryption": false

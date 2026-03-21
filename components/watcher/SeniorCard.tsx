@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Card } from "../ui/Card";
 import { StatusBadge } from "../ui/StatusBadge";
 import { Colors } from "../../constants/colors";
@@ -58,7 +59,7 @@ export function SeniorCard({
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 24 }}>🏠</Text>
+              <Ionicons name="home" size={24} color={Colors.primary} />
             </View>
             <View>
               <Text

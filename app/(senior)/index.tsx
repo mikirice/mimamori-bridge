@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useStore } from "../../store/useStore";
 import { useCheckins } from "../../hooks/useCheckins";
@@ -92,7 +93,7 @@ export default function SeniorHome() {
         onPress={() => router.push("/(senior)/settings")}
         style={{ position: "absolute", top: 60, right: 24 }}
       >
-        <Text style={{ fontSize: 28 }}>⚙️</Text>
+        <Ionicons name="settings-outline" size={28} color={Colors.textSecondary} />
       </TouchableOpacity>
     </View>
   );

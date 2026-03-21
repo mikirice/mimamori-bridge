@@ -6,6 +6,7 @@ import {
   Alert,
   Share,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useFamily } from "../../hooks/useFamily";
 import { useStore } from "../../store/useStore";
 import { Card } from "../../components/ui/Card";
@@ -154,9 +155,11 @@ export default function FamilyScreen() {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 20 }}>
-                {member.role === "senior" ? "🏠" : "👀"}
-              </Text>
+              <Ionicons
+                name={member.role === "senior" ? "home" : "eye-outline"}
+                size={20}
+                color={member.role === "senior" ? Colors.primary : "#1976D2"}
+              />
             </View>
             <View>
               <Text

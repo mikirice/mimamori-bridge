@@ -8,38 +8,39 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { Button } from "../../components/ui/Button";
 import { Colors } from "../../constants/colors";
 
 const { width } = Dimensions.get("window");
 
 interface OnboardingStep {
-  icon: string;
+  icon: React.ComponentProps<typeof Ionicons>["name"];
   title: string;
   description: string;
 }
 
 const STEPS: OnboardingStep[] = [
   {
-    icon: "🌿",
+    icon: "leaf-outline",
     title: "穏やかに見守る",
     description:
       "MimamoriBridgeは、離れて暮らすご家族の安否を穏やかに確認できるアプリです。GPS追跡は行いません。",
   },
   {
-    icon: "☀️",
+    icon: "sunny-outline",
     title: "毎朝のチェックイン",
     description:
       "見守られる方には毎朝通知が届きます。ボタンをタップするだけで「元気です」を家族に伝えられます。",
   },
   {
-    icon: "🚶",
+    icon: "walk-outline",
     title: "歩数で安心",
     description:
       "HealthKitと連携して歩数を共有。いつもより歩数が少ない日は、さりげなく気づけます。",
   },
   {
-    icon: "👨‍👩‍👧",
+    icon: "people-outline",
     title: "家族みんなで",
     description:
       "招待コードで家族をつなげましょう。兄弟姉妹で一緒に親を見守れます。",
@@ -91,7 +92,7 @@ export default function OnboardingScreen() {
               padding: 40,
             }}
           >
-            <Text style={{ fontSize: 80, marginBottom: 32 }}>{step.icon}</Text>
+            <Ionicons name={step.icon} size={80} color={Colors.primary} style={{ marginBottom: 32 }} />
             <Text
               style={{
                 fontSize: 28,
