@@ -16,23 +16,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "net.miki-studio.mimamori-bridge",
             "infoPlist": {
-        "NSHealthShareUsageDescription": "家族の安否確認のために歩数データを共有します",
-        "NSHealthUpdateUsageDescription": "ヘルスデータの更新権限は使用しません",
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification"
-        ],
         "CFBundleLocalizations": [
           "ja",
           "en"
         ],
         "CFBundleDevelopmentRegion": "ja"
-      },
-      "entitlements": {
-        "com.apple.developer.healthkit": true,
-        "com.apple.developer.healthkit.access": [
-          "health-records"
-        ]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -47,14 +35,7 @@
       "versionCode": 1
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/icon.png",
-          "color": "#4CAF50"
-        }
-      ]
+      "expo-router"
     ],
     "extra": {
       "eas": {

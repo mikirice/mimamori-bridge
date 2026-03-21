@@ -10,17 +10,21 @@ import { Colors } from "../../constants/colors";
 
 export default function SeniorHome() {
   const router = useRouter();
-  const { profile } = useStore();
+  const { profile, familyId } = useStore();
   const { todayCheckedIn, loading, doCheckin } = useCheckins();
   const { scheduleDailyCheckin } = useNotifications();
   const { isAvailable, startBackgroundSync } = useHealthKit();
 
   useEffect(() => {
+    if (!familyId) {
+      router.replace("/(auth)/join");
+      return;
+    }
     scheduleDailyCheckin(7, 0);
     if (isAvailable) {
       startBackgroundSync();
     }
-  }, [isAvailable]);
+  }, [isAvailable, familyId]);
 
   async function handleCheckIn() {
     const success = await doCheckin("morning");

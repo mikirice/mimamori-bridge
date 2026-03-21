@@ -62,10 +62,6 @@
 	<array>
 		<string>_expo._tcp</string>
 	</array>
-	<key>NSHealthShareUsageDescription</key>
-	<string>家族の安否確認のために歩数データを共有します</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>ヘルスデータの更新権限は使用しません</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Expo Dev Launcher uses the local network to discover and connect to development servers running on your computer.</string>
 	<key>NSUserActivityTypes</key>
@@ -74,11 +70,6 @@
 	</array>
 	<key>RCTNewArchEnabled</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

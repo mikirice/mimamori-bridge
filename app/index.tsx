@@ -22,11 +22,8 @@ export default function Index() {
     }
 
     if (!familyId) {
-      if (profile.role === "watcher") {
-        router.replace("/(watcher)/family");
-      } else {
-        router.replace("/(auth)/join");
-      }
+      // 家族未参加 → 全ロール共通で招待コード画面へ
+      router.replace("/(auth)/join");
       return;
     }
 
